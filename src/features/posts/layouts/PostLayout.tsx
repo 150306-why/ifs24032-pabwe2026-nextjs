@@ -33,9 +33,9 @@ export default function PostLayout({ children }: { children: ReactNode }) {
 
   if (!isProfile) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-slate-500">
+      <main className="flex min-h-screen items-center justify-center text-slate-600">
         Memuat sesi...
-      </div>
+      </main>
     );
   }
 

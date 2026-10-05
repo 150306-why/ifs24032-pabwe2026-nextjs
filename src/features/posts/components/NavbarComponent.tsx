@@ -33,7 +33,7 @@ export default function NavbarComponent({ onToggleSidebar }: Props) {
         >
           <IconMenu2 size={22} />
         </button>
-        <Link href="/" className="flex items-center gap-2 font-extrabold text-sky-600">
+        <Link prefetch={false} href="/" className="flex items-center gap-2 font-extrabold text-sky-700">
           <IconMessageCircle size={24} />
           <span>Postingan</span>
         </Link>
@@ -57,7 +57,7 @@ export default function NavbarComponent({ onToggleSidebar }: Props) {
               className="h-8 w-8 rounded-full object-cover"
             />
           ) : (
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-600 text-sm font-bold text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-700 text-sm font-bold text-white">
               {profile && profile.name ? profile.name.charAt(0).toUpperCase() : "?"}
             </span>
           )}
@@ -68,7 +68,7 @@ export default function NavbarComponent({ onToggleSidebar }: Props) {
             data-testid="profile-dropdown"
             className="absolute right-0 mt-2 w-48 rounded-xl border border-slate-200 bg-white p-1 shadow-lg"
           >
-            <Link
+            <Link prefetch={false}
               href="/profile"
               onClick={() => setOpen(false)}
               className="block rounded-lg px-3 py-2 text-sm hover:bg-slate-100"

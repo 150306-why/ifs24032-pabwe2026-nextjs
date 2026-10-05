@@ -90,7 +90,7 @@ export default function ChangeCoverModal({ open, postId, onClose, onSuccess }: P
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-sky-600 py-2.5 font-semibold text-white hover:bg-sky-700 disabled:opacity-60"
+          className="w-full rounded-lg bg-sky-700 py-2.5 font-semibold text-white hover:bg-sky-800 disabled:opacity-60"
         >
           {loading ? "Mengunggah..." : "Unggah"}
         </button>

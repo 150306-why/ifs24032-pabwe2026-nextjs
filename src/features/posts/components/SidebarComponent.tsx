@@ -50,7 +50,7 @@ export default function SidebarComponent({ open, onClose }: Props) {
         </div>
         <nav className="space-y-1">
           {MENUS.map(({ href, label, icon: Icon, filter: menuFilter }) => (
-            <Link
+            <Link prefetch={false}
               key={label}
               href={href}
               onClick={onClose}

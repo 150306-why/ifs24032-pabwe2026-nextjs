@@ -41,8 +41,8 @@ export default function RegisterPage() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold">Daftar</h2>
-        <p className="text-sm text-slate-500">Buat akun baru Anda.</p>
+        <h1 className="text-2xl font-bold">Daftar</h1>
+        <p className="text-sm text-slate-600">Buat akun baru Anda.</p>
       </div>
       <div>
         <label htmlFor="register-name-input" className="mb-1 block text-sm font-medium">
@@ -87,13 +87,13 @@ export default function RegisterPage() {
         id="register-submit-button"
         type="submit"
         disabled={loading}
-        className="w-full rounded-lg bg-sky-600 py-2.5 font-semibold text-white hover:bg-sky-700 disabled:opacity-60"
+        className="w-full rounded-lg bg-sky-700 py-2.5 font-semibold text-white hover:bg-sky-800 disabled:opacity-60"
       >
         {loading ? "Memproses..." : "Daftar"}
       </button>
-      <p className="text-center text-sm text-slate-500">
+      <p className="text-center text-sm text-slate-600">
         Sudah punya akun?{" "}
-        <Link href="/auth/login" className="font-semibold text-sky-600">
+        <Link prefetch={false} href="/auth/login" className="font-semibold text-sky-700">
           Masuk
         </Link>
       </p>

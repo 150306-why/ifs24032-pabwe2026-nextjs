@@ -75,14 +75,14 @@ export default function DetailPage() {
   }
 
   if (isLoading) {
-    return <p className="text-slate-500">Memuat data...</p>;
+    return <p className="text-slate-600">Memuat data...</p>;
   }
 
   if (!post) {
     return (
       <div className="space-y-3">
-        <p className="text-slate-500">Postingan tidak ditemukan.</p>
-        <Link href="/" className="font-semibold text-sky-600">
+        <p className="text-slate-600">Postingan tidak ditemukan.</p>
+        <Link prefetch={false} href="/" className="font-semibold text-sky-700">
           Kembali ke beranda
         </Link>
       </div>
@@ -91,6 +91,7 @@ export default function DetailPage() {
 
   return (
     <article className="mx-auto max-w-3xl space-y-5 rounded-2xl border border-slate-200 bg-white p-6">
+      <h1 className="sr-only">Detail Postingan</h1>
       {post.cover && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -109,13 +110,13 @@ export default function DetailPage() {
             className="h-10 w-10 rounded-full object-cover"
           />
         ) : (
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-600 font-bold text-white">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-700 font-bold text-white">
             {post.author ? post.author.name.charAt(0).toUpperCase() : "?"}
           </span>
         )}
         <div>
           <p className="font-semibold">{post.author ? post.author.name : "Anonim"}</p>
-          <p className="text-xs text-slate-400">{formatDate(post.created_at)}</p>
+          <p className="text-xs text-slate-600">{formatDate(post.created_at)}</p>
         </div>
       </div>
 
@@ -171,14 +172,14 @@ export default function DetailPage() {
           />
           <button
             type="submit"
-            className="rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white hover:bg-sky-700"
+            className="rounded-lg bg-sky-700 px-4 py-2 font-semibold text-white hover:bg-sky-800"
           >
             Kirim
           </button>
         </form>
 
         {comments.length === 0 ? (
-          <p className="text-sm text-slate-500">Belum ada komentar.</p>
+          <p className="text-sm text-slate-600">Belum ada komentar.</p>
         ) : (
           <ul className="space-y-2">
             {comments.map((item) => (
@@ -189,7 +190,7 @@ export default function DetailPage() {
                 <div>
                   <p className="text-sm font-semibold">{item.user ? item.user.name : "Anonim"}</p>
                   <p className="text-sm text-slate-700">{item.comment}</p>
-                  <p className="text-xs text-slate-400">{formatDate(item.created_at)}</p>
+                  <p className="text-xs text-slate-600">{formatDate(item.created_at)}</p>
                 </div>
                 {profile !== null && String(item.user_id) === String(profile.id) && (
                   <button

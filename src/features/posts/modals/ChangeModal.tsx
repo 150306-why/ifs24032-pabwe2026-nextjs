@@ -70,7 +70,7 @@ export default function ChangeModal({ open, post, onClose, onSuccess }: Props) {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-sky-600 py-2.5 font-semibold text-white hover:bg-sky-700 disabled:opacity-60"
+          className="w-full rounded-lg bg-sky-700 py-2.5 font-semibold text-white hover:bg-sky-800 disabled:opacity-60"
         >
           {loading ? "Menyimpan..." : "Simpan Perubahan"}
         </button>

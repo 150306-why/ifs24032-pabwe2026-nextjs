@@ -71,7 +71,7 @@ export default function ProfilePage() {
               className="h-16 w-16 rounded-full object-cover"
             />
           ) : (
-            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-sky-600 text-xl font-bold text-white">
+            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-sky-700 text-xl font-bold text-white">
               {profile ? profile.name.charAt(0).toUpperCase() : "?"}
             </span>
           )}
@@ -89,7 +89,7 @@ export default function ProfilePage() {
             <button
               type="submit"
               disabled={isChangePhoto}
-              className="rounded-lg bg-sky-600 px-3 py-1.5 text-sm font-semibold text-white disabled:opacity-60"
+              className="rounded-lg bg-sky-700 px-3 py-1.5 text-sm font-semibold text-white disabled:opacity-60"
             >
               {isChangePhoto ? "Mengunggah..." : "Unggah Foto"}
             </button>
@@ -128,7 +128,7 @@ export default function ProfilePage() {
         <button
           type="submit"
           disabled={isChangeProfile}
-          className="rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white disabled:opacity-60"
+          className="rounded-lg bg-sky-700 px-4 py-2 font-semibold text-white disabled:opacity-60"
         >
           {isChangeProfile ? "Menyimpan..." : "Simpan Profil"}
         </button>
@@ -166,7 +166,7 @@ export default function ProfilePage() {
         <button
           type="submit"
           disabled={isChangePassword}
-          className="rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white disabled:opacity-60"
+          className="rounded-lg bg-sky-700 px-4 py-2 font-semibold text-white disabled:opacity-60"
         >
           {isChangePassword ? "Menyimpan..." : "Ubah Kata Sandi"}
         </button>

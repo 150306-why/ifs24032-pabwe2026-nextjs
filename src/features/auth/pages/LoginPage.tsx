@@ -36,8 +36,8 @@ export default function LoginPage() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold">Masuk</h2>
-        <p className="text-sm text-slate-500">Silakan masuk untuk melanjutkan.</p>
+        <h1 className="text-2xl font-bold">Masuk</h1>
+        <p className="text-sm text-slate-600">Silakan masuk untuk melanjutkan.</p>
       </div>
       <div>
         <label htmlFor="login-email-input" className="mb-1 block text-sm font-medium">
@@ -69,13 +69,13 @@ export default function LoginPage() {
         id="login-submit-button"
         type="submit"
         disabled={loading}
-        className="w-full rounded-lg bg-sky-600 py-2.5 font-semibold text-white hover:bg-sky-700 disabled:opacity-60"
+        className="w-full rounded-lg bg-sky-700 py-2.5 font-semibold text-white hover:bg-sky-800 disabled:opacity-60"
       >
         {loading ? "Memproses..." : "Masuk"}
       </button>
-      <p className="text-center text-sm text-slate-500">
+      <p className="text-center text-sm text-slate-600">
         Belum punya akun?{" "}
-        <Link href="/auth/register" className="font-semibold text-sky-600">
+        <Link prefetch={false} href="/auth/register" className="font-semibold text-sky-700">
           Daftar
         </Link>
       </p>

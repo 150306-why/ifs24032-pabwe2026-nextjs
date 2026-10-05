@@ -29,7 +29,7 @@ export default function UsersPage() {
       <h1 className="text-2xl font-bold">Daftar Pengguna</h1>
 
       <div className="relative">
-        <IconSearch size={16} className="absolute left-3 top-3 text-slate-400" />
+        <IconSearch size={16} className="absolute left-3 top-3 text-slate-600" />
         <input
           aria-label="Cari pengguna"
           placeholder="Cari nama atau email..."
@@ -40,7 +40,7 @@ export default function UsersPage() {
       </div>
 
       {visible.length === 0 ? (
-        <p className="text-slate-500">Tidak ada pengguna.</p>
+        <p className="text-slate-600">Tidak ada pengguna.</p>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {visible.map((user) => (
@@ -56,13 +56,13 @@ export default function UsersPage() {
                   className="h-12 w-12 rounded-full object-cover"
                 />
               ) : (
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-600 font-bold text-white">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-700 font-bold text-white">
                   {user.name.charAt(0).toUpperCase()}
                 </span>
               )}
               <div className="min-w-0">
                 <p className="truncate font-semibold">{user.name}</p>
-                <p className="truncate text-sm text-slate-500">{user.email}</p>
+                <p className="truncate text-sm text-slate-600">{user.email}</p>
               </div>
             </div>
           ))}

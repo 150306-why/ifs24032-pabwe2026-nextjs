@@ -62,7 +62,7 @@ export default function HomePage() {
           <button
             type="button"
             onClick={() => setAddOpen(true)}
-            className="flex items-center gap-2 rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white hover:bg-sky-700"
+            className="flex items-center gap-2 rounded-lg bg-sky-700 px-4 py-2 font-semibold text-white hover:bg-sky-800"
           >
             <IconPlus size={18} /> Tambah Postingan
           </button>
@@ -70,18 +70,18 @@ export default function HomePage() {
       </div>
 
       <div className="flex gap-2 border-b border-slate-200">
-        <Link
+        <Link prefetch={false}
           href="/"
           className={`border-b-2 px-4 py-2 text-sm font-semibold ${
-            onlyMe ? "border-transparent text-slate-500" : "border-sky-600 text-sky-700"
+            onlyMe ? "border-transparent text-slate-600" : "border-sky-700 text-sky-700"
           }`}
         >
           Linimasa
         </Link>
-        <Link
+        <Link prefetch={false}
           href="/?filter=me"
           className={`border-b-2 px-4 py-2 text-sm font-semibold ${
-            onlyMe ? "border-sky-600 text-sky-700" : "border-transparent text-slate-500"
+            onlyMe ? "border-sky-700 text-sky-700" : "border-transparent text-slate-600"
           }`}
         >
           Postingan Saya
@@ -89,7 +89,7 @@ export default function HomePage() {
       </div>
 
       <div className="relative">
-        <IconSearch size={16} className="absolute left-3 top-3 text-slate-400" />
+        <IconSearch size={16} className="absolute left-3 top-3 text-slate-600" />
         <input
           aria-label="Cari postingan"
           placeholder="Cari deskripsi atau nama pembuat..."
@@ -100,13 +100,13 @@ export default function HomePage() {
       </div>
 
       {isLoading ? (
-        <p className="text-slate-500">Memuat data...</p>
+        <p className="text-slate-600">Memuat data...</p>
       ) : visible.length === 0 ? (
-        <p className="text-slate-500">Tidak ada postingan.</p>
+        <p className="text-slate-600">Tidak ada postingan.</p>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {visible.map((post) => (
-            <Link
+            <Link prefetch={false}
               key={post.id}
               href={`/posts/${post.id}`}
               className="overflow-hidden rounded-xl border border-slate-200 bg-white transition hover:shadow-md"
@@ -124,8 +124,8 @@ export default function HomePage() {
                   {post.author ? post.author.name : "Anonim"}
                 </p>
                 <p className="line-clamp-3 text-slate-700">{post.description}</p>
-                <p className="text-xs text-slate-400">{formatDate(post.created_at)}</p>
-                <div className="flex gap-4 text-sm text-slate-500">
+                <p className="text-xs text-slate-600">{formatDate(post.created_at)}</p>
+                <div className="flex gap-4 text-sm text-slate-600">
                   <span className="flex items-center gap-1">
                     <IconHeart size={16} data-testid="icon-likes" />
                     {post.likes ? post.likes.length : 0}

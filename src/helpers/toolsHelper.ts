@@ -1,7 +1,16 @@
-import Swal from "sweetalert2";
+import type { SweetAlertOptions } from "sweetalert2";
+
+/**
+ * SweetAlert2 dimuat secara lazy: hanya diunduh saat dialog pertama kali
+ * ditampilkan, sehingga tidak membebani JavaScript awal halaman.
+ */
+async function fire(options: SweetAlertOptions) {
+  const { default: Swal } = await import("sweetalert2");
+  return Swal.fire(options);
+}
 
 export function showSuccessDialog(message: string) {
-  return Swal.fire({
+  return fire({
     icon: "success",
     title: "Berhasil",
     text: message,
@@ -10,7 +19,7 @@ export function showSuccessDialog(message: string) {
 }
 
 export function showErrorDialog(message: string) {
-  return Swal.fire({
+  return fire({
     icon: "error",
     title: "Gagal",
     text: message,
@@ -19,7 +28,7 @@ export function showErrorDialog(message: string) {
 }
 
 export function showWarningDialog(message: string) {
-  return Swal.fire({
+  return fire({
     icon: "warning",
     title: "Perhatian",
     text: message,
@@ -31,7 +40,7 @@ export async function showConfirmDialog(
   message: string,
   confirmText = "Ya, lanjutkan"
 ): Promise<boolean> {
-  const result = await Swal.fire({
+  const result = await fire({
     icon: "question",
     title: "Konfirmasi",
     text: message,
