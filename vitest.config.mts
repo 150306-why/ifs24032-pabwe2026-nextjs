@@ -13,10 +13,13 @@ export default defineConfig({
     },
   },
   test: {
-    // Batasi worker agar tidak kehabisan waktu start (60 dtk, tidak dapat
-    // diubah) pada disk lambat / antivirus Windows. "threads" juga start
-    // lebih cepat daripada proses "forks".
-    pool: "threads",
+    // Vitest membatalkan worker yang belum siap dalam 60 dtk (tidak dapat
+    // diubah). Dengan pool "threads" setiap file tes menyalakan worker + jsdom
+    // baru; pada Windows yang lambat (antivirus/disk) beberapa file kena
+    // "Timeout waiting for worker to respond" sehingga coverage turun.
+    // "vmThreads" memakai ulang worker (jsdom dibuat sekali per worker) tetapi
+    // tetap mengisolasi tiap file lewat VM context.
+    pool: "vmThreads",
     maxWorkers: 2,
     globals: true,
     environment: "jsdom",
