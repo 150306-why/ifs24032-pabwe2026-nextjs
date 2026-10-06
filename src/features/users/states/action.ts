@@ -102,6 +102,27 @@ export function asyncSetProfile() {
   };
 }
 
+const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Memuat profil dengan percobaan ulang. Satu kegagalan sesaat (API lambat,
+ * rate limit, jaringan putus-nyambung) tidak boleh langsung dianggap sesi
+ * tidak valid. Hanya bila seluruh percobaan gagal, hasilnya false.
+ */
+export function asyncSetProfileWithRetry(retries = 2, delayMs = 700) {
+  return async (dispatch: AppDispatch): Promise<boolean> => {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      if (await dispatch(asyncSetProfile())) {
+        return true;
+      }
+      if (attempt < retries) {
+        await sleep(delayMs);
+      }
+    }
+    return false;
+  };
+}
+
 export function asyncSetIsChangeProfile({ name, email }: ChangeProfileValues) {
   return async (dispatch: AppDispatch): Promise<boolean> => {
     dispatch(setIsChangeProfileActionCreator(true));

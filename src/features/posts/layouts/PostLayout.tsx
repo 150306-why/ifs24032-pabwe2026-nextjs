@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getAccessToken } from "@/helpers/apiHelper";
-import { asyncSetProfile } from "@/features/users/states/action";
+import { asyncSetProfileWithRetry } from "@/features/users/states/action";
 import { asyncSetIsAuthLogout } from "@/features/auth/states/action";
 import NavbarComponent from "../components/NavbarComponent";
 import SidebarComponent from "../components/SidebarComponent";
@@ -23,7 +23,7 @@ export default function PostLayout({ children }: { children: ReactNode }) {
       return;
     }
 
-    dispatch(asyncSetProfile()).then((ok) => {
+    dispatch(asyncSetProfileWithRetry()).then((ok) => {
       if (!ok) {
         dispatch(asyncSetIsAuthLogout());
         router.replace("/auth/login");

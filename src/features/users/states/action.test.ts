@@ -62,6 +62,27 @@ describe("users action", () => {
     expect(dispatch).toHaveBeenCalledWith(A.setProfileActionCreator(null));
   });
 
+  it("asyncSetProfileWithRetry: berhasil di percobaan pertama", async () => {
+    const dispatch = vi.fn().mockResolvedValueOnce(true) as unknown as AppDispatch;
+    expect(await A.asyncSetProfileWithRetry()(dispatch)).toBe(true);
+    expect(dispatch).toHaveBeenCalledTimes(1);
+  });
+
+  it("asyncSetProfileWithRetry: gagal sesaat lalu berhasil", async () => {
+    const dispatch = vi
+      .fn()
+      .mockResolvedValueOnce(false)
+      .mockResolvedValueOnce(true) as unknown as AppDispatch;
+    expect(await A.asyncSetProfileWithRetry(2, 0)(dispatch)).toBe(true);
+    expect(dispatch).toHaveBeenCalledTimes(2);
+  });
+
+  it("asyncSetProfileWithRetry: gagal di semua percobaan", async () => {
+    const dispatch = vi.fn().mockResolvedValue(false) as unknown as AppDispatch;
+    expect(await A.asyncSetProfileWithRetry(2, 0)(dispatch)).toBe(false);
+    expect(dispatch).toHaveBeenCalledTimes(3);
+  });
+
   it("asyncSetIsChangeProfile sukses & gagal", async () => {
     vi.mocked(userApi.putMe).mockResolvedValueOnce(ok);
     let dispatch = fakeDispatch(true);

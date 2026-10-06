@@ -52,8 +52,23 @@ describe("PostLayout", () => {
     putAccessToken("expired");
     vi.mocked(userApi.getMe).mockResolvedValue({ success: false, message: "Unauthorized", data: null });
     renderWithProviders(<PostLayout>konten</PostLayout>);
-    await waitFor(() => expect(mockRouter.replace).toHaveBeenCalledWith("/auth/login"));
+    await waitFor(() => expect(mockRouter.replace).toHaveBeenCalledWith("/auth/login"), {
+      timeout: 4000,
+    });
+    expect(userApi.getMe).toHaveBeenCalledTimes(3);
     expect(localStorage.getItem("accessToken")).toBeNull();
     expect(screen.queryByText("konten")).not.toBeInTheDocument();
+  });
+
+  it("gangguan sesaat: dicoba ulang dan sesi tetap dipertahankan", async () => {
+    putAccessToken("tok");
+    vi.mocked(userApi.getMe)
+      .mockResolvedValueOnce({ success: false, message: "timeout", data: null })
+      .mockResolvedValueOnce(me);
+    renderWithProviders(<PostLayout>konten</PostLayout>);
+    expect(await screen.findByText("konten", {}, { timeout: 4000 })).toBeInTheDocument();
+    expect(userApi.getMe).toHaveBeenCalledTimes(2);
+    expect(mockRouter.replace).not.toHaveBeenCalled();
+    expect(localStorage.getItem("accessToken")).toBe("tok");
   });
 });
