@@ -32,6 +32,8 @@ export interface ApiFetchOptions {
   method?: string;
   params?: Record<string, string | number | null | undefined>;
   body?: Record<string, string | number>;
+  /** Body JSON (Content-Type: application/json), dipakai endpoint Posts. */
+  json?: Record<string, string | number>;
   formData?: FormData;
   auth?: boolean;
 }
@@ -58,7 +60,7 @@ function isSuccess(body: RawBody, response: Response): boolean {
  */
 export async function apiFetch<T = unknown>(
   path: string,
-  { method = "GET", params, body, formData, auth = true }: ApiFetchOptions = {}
+  { method = "GET", params, body, json, formData, auth = true }: ApiFetchOptions = {}
 ): Promise<ApiResult<T>> {
   const headers: Record<string, string> = {};
 
@@ -73,6 +75,9 @@ export async function apiFetch<T = unknown>(
 
   if (formData) {
     options.body = formData;
+  } else if (json) {
+    headers["Content-Type"] = "application/json";
+    options.body = JSON.stringify(json);
   } else if (body) {
     headers["Content-Type"] = "application/x-www-form-urlencoded";
     const encoded = new URLSearchParams();

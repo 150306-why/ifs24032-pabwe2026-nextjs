@@ -40,7 +40,12 @@ export default function DetailPage() {
     post !== null && profile !== null && String(post.user_id ?? post.author?.id) === String(profile.id);
   const likes = post && post.likes ? post.likes : [];
   const comments = post && post.comments ? post.comments : [];
-  const liked = profile !== null && likes.some((like) => String(like.user_id) === String(profile.id));
+  const liked =
+    profile !== null &&
+    likes.some((like) =>
+      String(typeof like === "object" ? like.user_id : like) === String(profile.id)
+    );
+  const myCommentId = post?.my_comment?.id;
 
   async function handleLike() {
     const ok = await dispatch(asyncSetIsPostLike(postId, liked));
@@ -62,8 +67,8 @@ export default function DetailPage() {
     }
   }
 
-  async function handleDeleteComment(commentId: string | number) {
-    const ok = await dispatch(asyncSetIsPostDeleteComment(postId, commentId));
+  async function handleDeleteComment() {
+    const ok = await dispatch(asyncSetIsPostDeleteComment(postId));
     if (ok) reload();
   }
 
@@ -192,11 +197,12 @@ export default function DetailPage() {
                   <p className="text-sm text-slate-700">{item.comment}</p>
                   <p className="text-xs text-slate-600">{formatDate(item.created_at)}</p>
                 </div>
-                {profile !== null && String(item.user_id) === String(profile.id) && (
+                {((myCommentId !== undefined && String(item.id) === String(myCommentId)) ||
+                  (profile !== null && String(item.user_id) === String(profile.id))) && (
                   <button
                     type="button"
                     aria-label="Hapus komentar"
-                    onClick={() => handleDeleteComment(item.id)}
+                    onClick={handleDeleteComment}
                     className="text-red-500 hover:text-red-700"
                   >
                     <IconTrash size={16} />

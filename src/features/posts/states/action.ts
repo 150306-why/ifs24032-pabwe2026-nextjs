@@ -203,7 +203,7 @@ export function asyncSetIsPostAddComment(id: string | number, comment: string) {
     );
 }
 
-export function asyncSetIsPostDeleteComment(id: string | number, commentId: string | number) {
+export function asyncSetIsPostDeleteComment(id: string | number) {
   return (dispatch: AppDispatch) =>
     runMutation(
       dispatch,
@@ -211,7 +211,7 @@ export function asyncSetIsPostDeleteComment(id: string | number, commentId: stri
         doing: ActionType.SET_IS_POST_DELETE_COMMENT,
         done: ActionType.SET_IS_POST_DELETED_COMMENT,
       },
-      () => postApi.deletePostComment(id, commentId)
+      () => postApi.deletePostComment(id)
     );
 }
 

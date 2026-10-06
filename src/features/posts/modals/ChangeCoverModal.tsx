@@ -7,6 +7,9 @@ import { useAppDispatch } from "@/hooks/redux";
 import { asyncSetIsPostChangeCover } from "../states/action";
 import { showWarningDialog } from "@/helpers/toolsHelper";
 
+const MAX_SIZE_MB = 1;
+const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+
 interface Props {
   open: boolean;
   postId: string | number;
@@ -25,6 +28,20 @@ export default function ChangeCoverModal({ open, postId, onClose, onSuccess }: P
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const selected = event.target.files?.[0];
     if (!selected) {
+      setFile(null);
+      setPreview(null);
+      return;
+    }
+    if (!selected.type.startsWith("image/")) {
+      showWarningDialog("File harus berupa gambar.");
+      event.target.value = "";
+      return;
+    }
+    if (selected.size > MAX_SIZE_BYTES) {
+      showWarningDialog(
+        `Ukuran gambar maksimal ${MAX_SIZE_MB} MB. Kecilkan dulu gambarnya.`
+      );
+      event.target.value = "";
       setFile(null);
       setPreview(null);
       return;

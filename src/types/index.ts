@@ -40,6 +40,9 @@ export interface Post {
   created_at?: string;
   updated_at?: string;
   author?: PostAuthor | null;
-  likes?: PostLike[];
+  /** API mengembalikan array id pengguna ([2, 3]); objek juga didukung. */
+  likes?: (PostLike | string | number)[];
   comments?: PostComment[];
+  /** Komentar milik pengguna yang sedang login (hanya ada di detail). */
+  my_comment?: PostComment | null;
 }

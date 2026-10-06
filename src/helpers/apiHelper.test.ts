@@ -75,6 +75,13 @@ describe("apiHelper", () => {
     expect(options.body).toBe("email=a%40b.c&n=1");
   });
 
+  it("mengirim body JSON", async () => {
+    await apiFetch("/posts/1/likes", { method: "POST", json: { like: 1 } });
+    const options = lastCall()[1];
+    expect(options.headers["Content-Type"]).toBe("application/json");
+    expect(options.body).toBe('{"like":1}');
+  });
+
   it("mengirim FormData apa adanya", async () => {
     const formData = new FormData();
     formData.append("cover", "x");

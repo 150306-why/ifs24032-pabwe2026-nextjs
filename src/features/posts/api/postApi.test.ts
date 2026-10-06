@@ -28,7 +28,7 @@ describe("postApi", () => {
     await postApi.postPost({ description: "halo" });
     expect(mocked).toHaveBeenCalledWith("/posts", {
       method: "POST",
-      body: { description: "halo" },
+      json: { description: "halo" },
     });
   });
 
@@ -36,7 +36,7 @@ describe("postApi", () => {
     await postApi.putPost(2, { description: "baru" });
     expect(mocked).toHaveBeenCalledWith("/posts/2", {
       method: "PUT",
-      body: { description: "baru" },
+      json: { description: "baru" },
     });
   });
 
@@ -57,26 +57,23 @@ describe("postApi", () => {
     await postApi.postPostLike(1, "like");
     expect(mocked).toHaveBeenLastCalledWith("/posts/1/likes", {
       method: "POST",
-      body: { type: "like" },
+      json: { like: 1 },
     });
     await postApi.postPostLike(1, "unlike");
-    expect(mocked.mock.lastCall?.[1]?.body).toEqual({ type: "unlike" });
+    expect(mocked.mock.lastCall?.[1]?.json).toEqual({ like: 0 });
   });
 
   it("postPostComment", async () => {
     await postApi.postPostComment(1, "bagus");
     expect(mocked).toHaveBeenCalledWith("/posts/1/comments", {
       method: "POST",
-      body: { comment: "bagus" },
+      json: { comment: "bagus" },
     });
   });
 
   it("deletePostComment", async () => {
-    await postApi.deletePostComment(1, 7);
-    expect(mocked).toHaveBeenCalledWith("/posts/1/comments", {
-      method: "DELETE",
-      body: { comment_id: 7 },
-    });
+    await postApi.deletePostComment(1);
+    expect(mocked).toHaveBeenCalledWith("/posts/1/comments", { method: "DELETE" });
   });
 
   it("deletePosts", async () => {

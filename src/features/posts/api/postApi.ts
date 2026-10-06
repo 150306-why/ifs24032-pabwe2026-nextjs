@@ -2,10 +2,7 @@ import { apiFetch } from "@/helpers/apiHelper";
 import type { Post } from "@/types";
 import type { PostFilter, PostFormValues } from "@/types/action";
 
-/**
- * Catatan: bentuk body untuk like dan hapus komentar mengikuti konvensi
- * API Delcom. Sesuaikan di sini bila dokumentasi resmi berbeda.
- */
+/** Bentuk request mengikuti https://open-api.delcom.org/docs/1.0/api-posts */
 const postApi = {
   /** filter: { is_me: 1 } untuk postingan milik sendiri */
   getPosts(filter: PostFilter = {}) {
@@ -19,14 +16,14 @@ const postApi = {
   postPost({ description }: PostFormValues) {
     return apiFetch<{ post_id: string | number }>("/posts", {
       method: "POST",
-      body: { description },
+      json: { description },
     });
   },
 
   putPost(id: string | number, { description }: PostFormValues) {
     return apiFetch(`/posts/${id}`, {
       method: "PUT",
-      body: { description },
+      json: { description },
     });
   },
 
@@ -44,22 +41,20 @@ const postApi = {
   postPostLike(id: string | number, type: "like" | "unlike") {
     return apiFetch(`/posts/${id}/likes`, {
       method: "POST",
-      body: { type },
+      json: { like: type === "like" ? 1 : 0 },
     });
   },
 
   postPostComment(id: string | number, comment: string) {
     return apiFetch(`/posts/${id}/comments`, {
       method: "POST",
-      body: { comment },
+      json: { comment },
     });
   },
 
-  deletePostComment(id: string | number, commentId: string | number) {
-    return apiFetch(`/posts/${id}/comments`, {
-      method: "DELETE",
-      body: { comment_id: commentId },
-    });
+  /** Menghapus komentar milik pengguna yang sedang login pada postingan ini. */
+  deletePostComment(id: string | number) {
+    return apiFetch(`/posts/${id}/comments`, { method: "DELETE" });
   },
 
   deletePosts() {

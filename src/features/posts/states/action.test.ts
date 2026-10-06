@@ -67,7 +67,7 @@ describe("posts action", () => {
     ["change", () => A.asyncSetIsPostChange(1, { description: "d" }), api.putPost, T.SET_IS_POST_CHANGE, T.SET_IS_POST_CHANGED],
     ["cover", () => A.asyncSetIsPostChangeCover(1, new File(["x"], "a.png")), api.postPostCover, T.SET_IS_POST_CHANGE_COVER, T.SET_IS_POST_CHANGED_COVER],
     ["add comment", () => A.asyncSetIsPostAddComment(1, "c"), api.postPostComment, T.SET_IS_POST_ADD_COMMENT, T.SET_IS_POST_ADDED_COMMENT],
-    ["delete comment", () => A.asyncSetIsPostDeleteComment(1, 2), api.deletePostComment, T.SET_IS_POST_DELETE_COMMENT, T.SET_IS_POST_DELETED_COMMENT],
+    ["delete comment", () => A.asyncSetIsPostDeleteComment(1), api.deletePostComment, T.SET_IS_POST_DELETE_COMMENT, T.SET_IS_POST_DELETED_COMMENT],
   ])("mutasi %s: sukses & gagal", async (_n, make, apiFn, doing, done) => {
     vi.mocked(apiFn as never as typeof api.postPost).mockResolvedValueOnce(ok);
     let dispatch = dispatchMock();

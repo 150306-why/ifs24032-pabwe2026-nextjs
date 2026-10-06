@@ -112,6 +112,18 @@ describe("DetailPage", () => {
     await waitFor(() => expect(vi.mocked(api.getPost).mock.calls.length).toBe(2));
   });
 
+  it("mengenali like dari array id pengguna dan komentar dari my_comment", async () => {
+    mockDetail({
+      ...base,
+      likes: [1, 3],
+      comments: [{ id: 20, comment: "punya saya" }],
+      my_comment: { id: 20, comment: "punya saya" },
+    });
+    render();
+    expect(await screen.findByRole("button", { name: /Batal Suka \(2\)/ })).toBeInTheDocument();
+    expect(screen.getByLabelText("Hapus komentar")).toBeInTheDocument();
+  });
+
   it("unlike bila sudah menyukai", async () => {
     mockDetail({ ...base, likes: [{ user_id: 1 }] });
     vi.mocked(api.postPostLike).mockResolvedValue(ok);
@@ -166,7 +178,7 @@ describe("DetailPage", () => {
     vi.mocked(api.deletePostComment).mockResolvedValueOnce(ok);
     render();
     await userEvent.click(await screen.findByLabelText("Hapus komentar"));
-    await waitFor(() => expect(api.deletePostComment).toHaveBeenCalledWith("5", 10));
+    await waitFor(() => expect(api.deletePostComment).toHaveBeenCalledWith("5"));
     await waitFor(() => expect(vi.mocked(api.getPost).mock.calls.length).toBe(2));
 
     vi.mocked(api.deletePostComment).mockResolvedValueOnce(fail);
