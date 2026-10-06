@@ -32,15 +32,13 @@ export default function ChangeCoverModal({ open, postId, onClose, onSuccess }: P
       setPreview(null);
       return;
     }
-    if (!selected.type.startsWith("image/")) {
-      showWarningDialog("File harus berupa gambar.");
-      event.target.value = "";
-      return;
-    }
-    if (selected.size > MAX_SIZE_BYTES) {
-      showWarningDialog(
-        `Ukuran gambar maksimal ${MAX_SIZE_MB} MB. Kecilkan dulu gambarnya.`
-      );
+    const error = !selected.type.startsWith("image/")
+      ? "File harus berupa gambar."
+      : selected.size > MAX_SIZE_BYTES
+        ? `Ukuran gambar maksimal ${MAX_SIZE_MB} MB. Kecilkan dulu gambarnya.`
+        : null;
+    if (error) {
+      showWarningDialog(error);
       event.target.value = "";
       setFile(null);
       setPreview(null);

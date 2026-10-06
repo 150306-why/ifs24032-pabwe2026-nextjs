@@ -45,6 +45,25 @@ describe("ChangeCoverModal", () => {
     expect(screen.queryByAltText("Pratinjau cover")).not.toBeInTheDocument();
   });
 
+  it("menolak berkas yang bukan gambar", () => {
+    renderWithProviders(<ChangeCoverModal open postId={1} onClose={() => {}} />);
+    pick();
+    const text = new File(["x"], "a.txt", { type: "text/plain" });
+    fireEvent.change(screen.getByLabelText("Gambar Cover"), { target: { files: [text] } });
+    expect(showWarningDialog).toHaveBeenCalledWith("File harus berupa gambar.");
+    expect(screen.queryByAltText("Pratinjau cover")).not.toBeInTheDocument();
+  });
+
+  it("menolak gambar lebih dari 1 MB", () => {
+    renderWithProviders(<ChangeCoverModal open postId={1} onClose={() => {}} />);
+    const big = new File([new Uint8Array(1024 * 1024 + 1)], "big.png", { type: "image/png" });
+    fireEvent.change(screen.getByLabelText("Gambar Cover"), { target: { files: [big] } });
+    expect(showWarningDialog).toHaveBeenCalledWith(
+      expect.stringContaining("maksimal 1 MB")
+    );
+    expect(screen.queryByAltText("Pratinjau cover")).not.toBeInTheDocument();
+  });
+
   it("mengunggah cover lalu menutup dan memanggil onSuccess", async () => {
     vi.mocked(api.postPostCover).mockResolvedValue({ success: true, message: "ok", data: null });
     const onClose = vi.fn();

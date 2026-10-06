@@ -13,6 +13,11 @@ export default defineConfig({
     },
   },
   test: {
+    // Batasi worker agar tidak kehabisan waktu start (60 dtk, tidak dapat
+    // diubah) pada disk lambat / antivirus Windows. "threads" juga start
+    // lebih cepat daripada proses "forks".
+    pool: "threads",
+    maxWorkers: 2,
     globals: true,
     environment: "jsdom",
     setupFiles: "./src/setupTests.ts",
